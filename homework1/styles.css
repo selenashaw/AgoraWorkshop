@@ -1,1 +1,100 @@
+body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+}
 
+#logo{
+  width: 7vw;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+#imgContainer{
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#flexContainer{
+  display: flex;
+  flex-direction: row;
+  height: 70vh;
+  margin-top:10vh;
+  margin-bottom:10vh;
+  margin-left:10vw;
+  margin-right:10vw;
+}
+
+#right{
+  flex:1;
+  box-shadow: 0px 0px 20px #BCBCBC;
+  padding-top: 40px;
+  padding-left: 8vw;
+  padding-right: 8vw;
+}
+
+#loginContainer{
+  margin-top: 10vh;
+}
+
+#loginText{
+  font-size: 1.25rem;
+}
+
+#unlimited{
+  color:#099dfd;
+}
+
+#userInputs{
+  margin-top: 15px;
+}
+
+input{
+  margin-top:20px;
+  padding:5px;
+  width:100%;
+  border: 2px solid #099dfd;
+  border-radius: 5px;
+  box-shadow: 0px 0px 2px #099dfd;
+
+}
+#submitButton{
+  background-color: #099dfd;
+  margin-top: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 15px;
+  padding-left: 15px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+#left{
+  background-color: #099dfd;
+  width: 32.5vw;
+  padding: 50px;
+  height: auto;
+  text-align:center;
+}
+
+#illustrationContainer{
+  width: 70%;
+  margin: auto;
+  margin-top: 5vh;
+  margin-bottom: 15vh;
+}
+
+#illustration{
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#chatContainer{
+  margin: 8px;
+}
+
+#bottomText{
+  font-size: 1.25rem;
+  color:white;
+}
