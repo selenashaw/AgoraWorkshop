@@ -1,1 +1,69 @@
+<html>
+  <head>
+    <title>Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id = calcContainer>
+      <span id="calculator">Calculator</span>
+    </div>
+    <div id = "inputs">
+      <input type="text" id="arg1" placeholder="First Argument"/>
+      <input type="text" id="arg2" placeholder="Second Argument"/>
+      </br>
+      <button type="submit" id="add" onclick="math('+')">Add</button>
+      <button type="submit" id="subtract" onclick="math('-')">Subtract</button>
+      <button type="submit" id="multiply" onclick="math('*')">Multiply</button>
+      <button type="submit" id="divide" onclick="math('/')">Divide</button>
+      </br>
+      <input type="text" id="result" placeholder="Result"/>
+      </div>
+      <script>
+        function check(arg1, arg2) {          
+          if (arg1.value!=""){
+            arg1.className="";
+            if(arg2.value!=""){
+              arg2.className="";
+              return true;
+            } else {
+              arg2.className = "incorrect";
+              return false;
+            }
+          } else {
+            arg1.className = "incorrect";
+            return false;
+          }
+        }
 
+        function math(operation) {
+          let arg1 = document.getElementById("arg1");
+          let arg2 = document.getElementById("arg2");
+          if(check(arg1, arg2)) {
+            if(operation=='+'){
+              let result = parseInt(arg1.value) + parseInt(arg2.value);
+              document.getElementById("result").value = result;
+            }
+            else if(operation=='-') {
+              let result = parseInt(arg1.value) - parseInt(arg2.value);
+              document.getElementById("result").value = result;
+            }
+            else if(operation=='*') {
+              let result = parseInt(arg1.value) * parseInt(arg2.value);
+              document.getElementById("result").value = result;
+            }
+            else if(operation=='/'){
+              let result = parseInt(arg1.value) / parseInt(arg2.value);
+              document.getElementById("result").value = result;
+            }
+          
+          } else {
+            alert("Whoops! Looks like an argument is missing!")
+          }
+       
+        }
+
+      </script>
+  </body>
+</html>

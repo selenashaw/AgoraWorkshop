@@ -1,0 +1,37 @@
+body{
+  text-align: center;
+  font-family: 'Dancing Script', cursive;
+  background-color:#60d6c3;
+}
+
+#calcContainer{
+  margin:15px;
+}
+
+#calculator{
+  font-size: 2rem;
+  color:#669f95;
+}
+
+button{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+  border-radius:5px;
+  border-color:white;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.25rem;
+  background-color:#669f95;
+}
+
+input{
+  text-align: center;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.25rem;
+  border: 2px solid #669f95;
+  border-radius: 5px;
+}
+
+.incorrect{
+  border: 2px solid red;
+}
