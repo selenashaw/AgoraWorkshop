@@ -21,6 +21,8 @@
       <input type="text" id="result" placeholder="Result"/>
       </div>
       <script>
+        
+        // checks to see if either argument is empty
         function check(arg1, arg2) {          
           if (arg1.value!=""){
             arg1.className="";
@@ -37,6 +39,8 @@
           }
         }
 
+        // preforms the operation based on the button click (which sets the
+        // operation argument to either '+', '-', '*', '/')
         function math(operation) {
           let arg1 = document.getElementById("arg1");
           let arg2 = document.getElementById("arg2");
@@ -57,11 +61,9 @@
               let result = parseInt(arg1.value) / parseInt(arg2.value);
               document.getElementById("result").value = result;
             }
-          
           } else {
             alert("Whoops! Looks like an argument is missing!")
           }
-       
         }
 
       </script>
