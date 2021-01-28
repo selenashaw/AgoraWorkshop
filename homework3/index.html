@@ -18,16 +18,18 @@
         <button class="submitButton" id="joinButton">Join</button>
           <div class="participantList">
             <span>Participants</span>
-            <div class="participants">
+            <div id="participants">
             </div>
           </div>
         </div>
       </div>
       <div class="right">
         <div id="myStream"></div>
-        <div id="remoteStream"></div>
+        <div class = "remoteStreamContainer">
+          <div id="remoteStream"></div>
+        </div>
       </div>
-    </div>
+     </div>
     <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.0.0.js"></script>
     <script src="agoraRtc.js"></script>
   </body>
