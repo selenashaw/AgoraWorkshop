@@ -1,0 +1,83 @@
+body{
+  background-image: url("assets/curtains.jpg");
+  background-size: cover;
+  margin:0;
+  font-family: 'Merriweather', serif;
+}
+
+#flexContainer{
+  display:flex;
+  flex-direction: row;
+}
+
+#right{
+  width: 20vw;
+  height: 100vh;
+}
+
+#left{
+  width: 20vw;
+  height:100vh;
+}
+
+#center{
+  width: 60vw;
+  height: 100%;
+  background-color: #222222;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  font-size:120%;
+  color: #FFD700;
+  text-align: center;
+}
+
+.logo{
+  margin:auto;
+  width: 15vw;
+  margin-bottom: 12.5vh;
+}
+
+.logoInCall{
+  width: 10vw;
+  margin-top: 0px;
+  margin-left: 5px;
+}
+
+#myLogo{
+  width: 100%;
+}
+
+input{
+  margin-top: 5px;
+  border: 1.5px solid #FFD700;
+  border-radius: 5px;
+  background-color: black;
+  font-size:90%;
+  color: #FFD700;
+}
+
+button{
+  margin-top: 5px;
+  border: 1.5px solid #FFD700;
+  border-radius: 5px;
+  background-color: black;
+  font-size:90%;
+  color: #FFD700;
+}
+
+#outerflex{
+  display:flex;
+  flex-direction: column;
+}
+
+#topFlexContainer{
+  height: 75vh;
+  display:flex;
+  flex-direction: row;
+}
+
+#streams{
+  height: 25vh;
+  width: 100vw;
+  background-color: black;
+}

@@ -15,23 +15,21 @@
     
   </header>
   <body>
-    <div id="flexContainer">
-      <div id="right"></div>
-      <div id="center">
-        <div class = "logo">
-          <img id="myLogo" src="assets/logo.png"/>
+    <div class="outerFlex">
+      <div id="topFlexContainer">
+        <div id="right">
+          <div class = "logoInCall">
+            <img id="myLogo" src="assets/logo.png"/>
+          </div>
         </div>
-        <span>Join a room to watch movies and videos with your friends!</span>
-        <form action="./videoCall.html" onsubmit="">
-          <br/>
-          <input type="text" id="username" placeholder="User Name"/>
-          <br/>
-          <input type="text" id="room" placeholder="Room Name"/>
-          <br/>
-          <button class="submitButton" id="join">Join</button>  
-        </form>
+        <div id="center">
+          
+        </div>
+        <div id=left></div>
       </div>
-      <div id=left></div>
+      <div id=streams>
+
+      </div>
     </div>
     <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.0.0.js"></script>
     <script src="agoraRtc.js"></script>
