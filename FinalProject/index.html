@@ -3,11 +3,8 @@
     <title> Virtual Theater </title>
     <link rel="stylesheet" href="styles.css">
     
-    <!--Favicon code-->
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png">
-    <link rel="manifest" href="/favicon_io/site.webmanifest">
+    <!--Favicon code To debug when github.io is setup-->
+    <link rel="icon" type="image/png" href="/assets/logo.png">
 
     <!--Font code-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -22,18 +19,17 @@
           <img id="myLogo" src="assets/logo.png"/>
         </div>
         <span>Join a room to watch movies and videos with your friends!</span>
-        <form action="./videoCall.html" onsubmit="">
+        <form action="./videoCall.html" onsubmit="return validInputs()">
           <br/>
           <input type="text" id="username" placeholder="User Name"/>
           <br/>
           <input type="text" id="room" placeholder="Room Name"/>
           <br/>
-          <button class="submitButton" id="join">Join</button>  
+          <button class="submitButton" id="join" onclick="validInputs()">Join</button>  
         </form>
       </div>
       <div id=left></div>
     </div>
-    <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.0.0.js"></script>
-    <script src="agoraRtc.js"></script>
+    <script src="setup.js"></script>
   </body>
 </html>

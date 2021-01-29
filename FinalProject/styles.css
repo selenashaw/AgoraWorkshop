@@ -3,6 +3,8 @@ body{
   background-size: cover;
   margin:0;
   font-family: 'Merriweather', serif;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 #flexContainer{
@@ -12,7 +14,7 @@ body{
 
 #right{
   width: 20vw;
-  height: 100vh;
+  position: relative;
 }
 
 #left{
@@ -22,8 +24,7 @@ body{
 
 #center{
   width: 60vw;
-  height: 100%;
-  background-color: #222222;
+  background-color: #161616;
   padding-left: 5vw;
   padding-right: 5vw;
   font-size:120%;
@@ -65,6 +66,10 @@ button{
   color: #FFD700;
 }
 
+.badInput {
+  border: 1.5px solid red;
+}
+
 #outerflex{
   display:flex;
   flex-direction: column;
@@ -76,8 +81,56 @@ button{
   flex-direction: row;
 }
 
+#roomText{
+  margin: 0px
+  font-size:75%;
+  color: #FFD700;
+  text-align: center;
+}
+
 #streams{
   height: 25vh;
   width: 100vw;
   background-color: black;
+  margin: 0px;
+  padding: 5px;
+  overflow-y:hidden;
+  overflow-x: auto;
+  white-space: nowrap;
 }
+
+#host {
+  background-color:white;
+  height: 15vw;
+  width: 20vw;
+  text-align:justify;
+}
+
+.controls{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 45px;
+  margin-right:auto;
+  margin-left: 0px;
+  height: 200px;
+  width: 60px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border:1px solid black;
+  background-color: rgba(78, 16, 16, 0.5);
+  box-shadow: 4px 4px 20px rgb(0, 0, 0);
+}
+
+.icon{
+  width: 45px;
+  cursor: pointer;
+}
+
+#leave{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
