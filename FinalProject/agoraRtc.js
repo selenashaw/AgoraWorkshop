@@ -1,4 +1,3 @@
-// import RtmClient from './rtm-client'
 let appId = "8104cf00c083443fba6e201ea26d19fd";
 
 let globalStream;
@@ -7,9 +6,11 @@ let isVideoMuted = false;
 let isScreenShare = false;
 let isChatOpen = false;
 let channelName = "textChat";
+let channel;
 
+let myName = getName();
 
-// let rtm = AgoraRTM.createInstance(appId);
+let rtm = AgoraRTM.createInstance(appId);
 
 let client = AgoraRTC.createClient({
   mode: "live",
@@ -28,9 +29,23 @@ roomnameDiv.appendChild(roomSpan);
 
 client.init(appId, ()=> console.log("AgoraRTC Client Connected Successfully", handlefail));
 
-// rtm.login(getName());
-// let channel = rtm.createChannel(channelName);
-// channel.join();
+rtm.login({uid:getName()}).then(() => {
+  channel = rtm.createChannel(channelName);
+  channel.join();
+  console.log("Channel created and joined.");
+
+channel.onChannelTestMessage(function(message, id) {
+  let chat = document.getElementById("chat");
+  let messagespan = document.createElement("span");
+  messagespan.textContent = message;
+  let newline = document.createElement("br");
+  chat.append(messagespan);
+  chat.append(newline);
+  console.log(message);
+});
+
+}).catch(error => {handlefail});
+
 
 let addVideoStream = function(streamId, isMyStream){
   let container = document.getElementById("myStream");
@@ -61,42 +76,48 @@ let removeVideoStream = function(evt){
 }
 
 
-  client.join(
-    null,
-    getRoom(),
-    getName(),
-    () =>{
-      var localStream = AgoraRTC.createStream({
-        video: true,
-        audio: true
-      })
+client.join(
+  null,
+  getRoom(),
+  getName(),
+  () =>{
+    var localStream = AgoraRTC.createStream({
+      video: true,
+      audio: true,
+      screen: false,
+      screenAudio: false
+    })
+    localStream.init(function(evt) {
+      addVideoStream(getName(), true);
+      localStream.play(getName());
+      console.log("App id: ${appId}\nChannel id: ${channelName}");
+      client.publish(localStream);
+    });
+    globalStream = localStream;
+  }
+);
 
-      localStream.init(function(evt) {
-        addVideoStream(getName(), true);
-        localStream.play(getName());
-        console.log("App id: ${appId}\nChannel id: ${channelName}");
-        client.publish(localStream);
-      });
-      globalStream = localStream;
-    }
-  );
+client.on("stream-added", function(evt){
+  client.subscribe(evt.stream,handlefail);
+});
 
-  client.on("stream-added", function(evt){
-    client.subscribe(evt.stream,handlefail);
-  });
-
-  client.on("stream-subscribed", function(evt){
-    console.log("Subscribed Stream");
-    let stream = evt.stream;
+client.on("stream-subscribed", function(evt){
+  console.log("Subscribed Stream");
+  let stream = evt.stream;
+  if(stream.params.streamId === "ScreenShare") {
+    stream.play('centerScreen');
+  }
+  else {
     addVideoStream(stream.getId(), false);
     stream.play(stream.getId());
-  });
+  }
+});
 
-  client.on("stream-removed", removeVideoStream);
+client.on("stream-removed", removeVideoStream);
 
-  client.on("peer-leave", function(evt) {
-    removeVideoStream(evt);
-  });
+client.on("peer-leave", function(evt) {
+  removeVideoStream(evt);
+});
 
 document.getElementById("leave").onclick = function(){
   client.leave(function() {
@@ -127,32 +148,15 @@ document.getElementById("audio").onclick = function() {
   isAudioMuted = !isAudioMuted;
 };
 
-document.getElementById("chatButton").onclick = function() {
-  let chatbox = document.getElementById("chat");
-  if(!isChatOpen) {
-    chatbox.style.display = "block";
-  } 
-  else {
-    chatbox.style.display = "none";
-  }
-  isChatOpen = !isChatOpen;
-}
-
-// document.getElementById("send").onclick = function() {
-//   let message = document.getElementById("message").value;
-//   console.log("message");
-//   channel.sendsMessage(message);
-// }
-
 document.getElementById("screenshare").onclick = function() {
   let screenshare = AgoraRTC.createStream({
+    streamId: "ScreenShare",
     video: false,
     audio: false,
     screen: true,
     screenAudio: true
   })
   if(!isScreenShare) {
-
     screenshare.init(function() {
       screenshare.play('centerScreen');
       client.publish(screenshare);
@@ -175,3 +179,34 @@ document.getElementById("screenshare").onclick = function() {
   }
   isScreenShare = !isScreenShare
 }
+
+document.getElementById("chatButton").onclick = function() {
+  let chatbox = document.getElementById("chat");
+  let msginput = document.getElementById("messageInput");
+  if(!isChatOpen) {
+    chatbox.style.display = "block";
+    msginput.style.display = "block";
+  } 
+  else {
+    chatbox.style.display = "none";
+    msginput.style.display = "none";
+  }
+  isChatOpen = !isChatOpen;
+}
+
+document.getElementById("send").onclick = function() {
+  let message = document.getElementById("message").value;
+  message = myName + ": " + message;
+  document.getElementById("message").value ="";
+  channel.sendMessage({ text: message }).then(() => {
+    let chat = document.getElementById("chat");
+    let messagespan = document.createElement("span");
+    messagespan.textContent = message;
+    let newline = document.createElement("br");
+    chat.append(messagespan);
+    chat.append(newline);
+    console.log("Message sent");
+  }).catch(error => {handlefail});
+}
+
+

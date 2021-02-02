@@ -14,7 +14,7 @@ body{
 
 #right{
   width: 20vw;
-  position: relative;
+  position:relative;
 }
 
 #left{
@@ -135,16 +135,15 @@ button{
 }
 
 #chat {
-  position: relative;
   margin-right:0px;
   margin-left: auto;
   margin-top: 15px;
   width: 85%;
-  height: 70%;
+  height: 62.5%;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
   border:1px solid black;
-  background-color: rgba(78, 16, 16, 0.5);
+  background-color: rgba(114, 32, 32, 0.5);
   box-shadow: 4px 4px 20px rgb(0, 0, 0);
   display: none;
   overflow-x:hidden;
@@ -152,24 +151,32 @@ button{
 }
 
 #messageInput{
-  position: absolute;
-  bottom: 2;
-  right: 2;
+  margin-right:0px;
   margin-left:auto;
+  text-align:end;
+  display: none;
 }
 
 #message{
-  background-color: rgba(78, 16, 16);
+  margin-right: 0px;
+  margin-left: auto;
+  background-color: rgba(114, 32, 32);
   border: 1.5px solid black;
   color: black;
   width: 85%;
+  border-radius: 0px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 #send{
-  font-size: .5rem;
-  padding: 1px;
-  margin: 0px;
-  background-color: rgba(78, 16, 16);
+  font-size: .9rem;
+  padding: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-top: 3px;
+  margin-right: 6vw;
+  background-color: rgba(114, 32, 32);
   border: 1.5px solid black;
   color: black;
 }
