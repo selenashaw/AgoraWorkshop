@@ -32,25 +32,37 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
               </svg>
             </div>
-            <div class = "icon" id="chat">
+            <div class = "icon" id="chatButton">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+              </svg>
+            </div>
+            <div class="icon" id="screenshare">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd" />
               </svg>
             </div>
           </div>
           <button class="submitButton" id="leave">Leave</button>
         </div>
-        <div id="center">
-          
+        <div id="centerScreen"></div>
+        <div id=left>
+          <div id="chat">
+            <div id="messageInput">
+              <input type="text" id="message" placeholder="Type here"/>
+              <button class="submitButton" id="send">Send</button>  
+            </div>
+          </div>
         </div>
-        <div id=left></div>
       </div>
       <div id=streams>
-        <div id="host"></div>
+        <div id="myStream"></div>
       </div>
     </div>
     <script src="setup.js"></script>
     <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.0.0.js"></script>
+    <!-- <script src ="rtm-client.js"></script> -->
+    <!-- <script src="agora-rtm-sdk-1.4.0.js"></script> -->
     <script src="agoraRtc.js"></script>
   </body>
 </html>
