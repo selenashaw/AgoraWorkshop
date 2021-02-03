@@ -33,19 +33,19 @@ rtm.login({uid:getName()}).then(() => {
   channel = rtm.createChannel(channelName);
   channel.join();
   console.log("Channel created and joined.");
-
-channel.onChannelTestMessage(function(message, id) {
-  let chat = document.getElementById("chat");
-  let messagespan = document.createElement("span");
-  messagespan.textContent = message;
-  let newline = document.createElement("br");
-  chat.append(messagespan);
-  chat.append(newline);
-  console.log(message);
-});
-
 }).catch(error => {handlefail});
 
+if(channel !== undefined) {
+  channel.onChannelTestMessage(function(message, id) {
+    let chat = document.getElementById("chat");
+    let messagespan = document.createElement("span");
+    messagespan.textContent = message;
+    let newline = document.createElement("br");
+    chat.append(messagespan);
+    chat.append(newline);
+    console.log(message);
+  });
+}
 
 let addVideoStream = function(streamId, isMyStream){
   let container = document.getElementById("myStream");
