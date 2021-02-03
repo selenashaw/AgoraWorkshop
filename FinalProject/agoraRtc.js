@@ -29,6 +29,13 @@ roomnameDiv.appendChild(roomSpan);
 
 client.init(appId, ()=> console.log("AgoraRTC Client Connected Successfully", handlefail));
 
+// let screenClient = AgoraRTC.createClient({
+//   mode: "live",
+//   codec: "h264"
+// });
+
+// screenClient.init(appId, ()=> console.log("AgoraRTC Client Connected Successfully", handlefail));
+
 rtm.login({uid:getName()}).then(() => {
   channel = rtm.createChannel(channelName);
   channel.join();
@@ -36,7 +43,7 @@ rtm.login({uid:getName()}).then(() => {
 }).catch(error => {handlefail});
 
 if(channel !== undefined) {
-  channel.onChannelTestMessage(function(message, id) {
+  channel.on("ChannelMessage", function(message, id) {
     let chat = document.getElementById("chat");
     let messagespan = document.createElement("span");
     messagespan.textContent = message;
@@ -126,6 +133,7 @@ document.getElementById("leave").onclick = function(){
   removeMyVideoStream();
   channel.leave();
   rtm.logout();
+  window.location.href = "index.html";
 }
 
 document.getElementById("video").onclick = function() {
@@ -149,18 +157,27 @@ document.getElementById("audio").onclick = function() {
 };
 
 document.getElementById("screenshare").onclick = function() {
-  let screenshare = AgoraRTC.createStream({
-    streamId: "ScreenShare",
-    video: false,
-    audio: false,
-    screen: true,
-    screenAudio: true
-  })
   if(!isScreenShare) {
-    screenshare.init(function() {
-      screenshare.play('centerScreen');
-      client.publish(screenshare);
-    }, handlefail());
+    client.join(
+    null,
+    getRoom(),
+    "Screenshare",
+    () =>{
+      var screenshare = AgoraRTC.createStream({
+        streamId: "ScreenShare",
+        video: false,
+        audio: false,
+        screen: true,
+        screenAudio: true
+      })
+      screenshare.init(function(evt) {
+        addVideoStream("Screenshare", false);
+        screenshare.play("centerScreen");
+        console.log("App id: ${appId}\nChannel id: ${channelName}");
+        client.publish(screenshare);
+      });
+    }
+  );
     
     // let params = {
     //   videoDimensions: {
@@ -179,6 +196,22 @@ document.getElementById("screenshare").onclick = function() {
   }
   isScreenShare = !isScreenShare
 }
+
+// screenClient.on("stream-added", function(evt){
+//   screenClient.subscribe(evt.stream,handlefail);
+// });
+
+// screenClient.on("stream-subscribed", function(evt){
+//   console.log("Subscribed Stream");
+//   let stream = evt.stream;
+//   if(stream.params.streamId === "ScreenShare") {
+//     stream.play('centerScreen');
+//   }
+//   else {
+//     addVideoStream(stream.getId(), false);
+//     stream.play(stream.getId());
+//   }
+// });
 
 document.getElementById("chatButton").onclick = function() {
   let chatbox = document.getElementById("chat");
