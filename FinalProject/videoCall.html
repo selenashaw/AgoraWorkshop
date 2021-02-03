@@ -3,17 +3,18 @@
     <title> Virtual Theater </title>
     <link rel="stylesheet" href="styles.css">
     
-    <!--Favicon code-->
-    <link rel="icon" type="image/png" href="/assets/logo.png">
-
-    <!--Font code-->
+    <!--Setting the Font-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     
   </header>
   <body>
+    <!-- outerflex maintains the top and bottom half of the screen, bottom half is
+    for video streams and the top is for screensharing -->
     <div class="outerFlex">
       <div id="topFlexContainer">
+        <!-- This div holds all of the buttons for muting video, muting audio, 
+        opening the chat, and starting the screen share -->
         <div id="right">
           <div class = "logoInCall">
             <img id="myLogo" src="assets/logo.png"/>
@@ -45,8 +46,10 @@
           </div>
           <button class="submitButton" id="leave">Leave</button>
         </div>
+        <!-- This div holds the screenshare once it has started -->
         <div id="centerScreen"></div>
-        <div id=left>
+        <!-- This div holds the chat, when the chat overflows a virtical scroll bar appears -->
+        <div id="left">
           <div id="chat"></div>
           <div id="messageInput">
             <input type="text" id="message" placeholder="Type here"/>
@@ -55,6 +58,8 @@
           </div>
         </div>
       </div>
+      <!-- The streams are located at the bottom of the page, when there
+      are more people than the screen can fit a horizontal scroll bar appears -->
       <div id=streams>
         <div id="myStream"></div>
       </div>

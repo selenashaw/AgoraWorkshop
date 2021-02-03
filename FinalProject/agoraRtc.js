@@ -29,12 +29,12 @@ roomnameDiv.appendChild(roomSpan);
 
 client.init(appId, ()=> console.log("AgoraRTC Client Connected Successfully", handlefail));
 
-// let screenClient = AgoraRTC.createClient({
-//   mode: "live",
-//   codec: "h264"
-// });
+let screenClient = AgoraRTC.createClient({
+  mode: "live",
+  codec: "h264"
+});
 
-// screenClient.init(appId, ()=> console.log("AgoraRTC Client Connected Successfully", handlefail));
+screenClient.init(appId, ()=> console.log("AgoraRTC Client Connected Successfully", handlefail));
 
 rtm.login({uid:getName()}).then(() => {
   channel = rtm.createChannel(channelName);
@@ -42,18 +42,30 @@ rtm.login({uid:getName()}).then(() => {
   console.log("Channel created and joined.");
 }).catch(error => {handlefail});
 
-if(channel !== undefined) {
-  channel.on("ChannelMessage", function(message, id) {
-    let chat = document.getElementById("chat");
-    let messagespan = document.createElement("span");
-    messagespan.textContent = message;
-    let newline = document.createElement("br");
-    chat.append(messagespan);
-    chat.append(newline);
-    console.log(message);
-  });
+let isChannelReady = function() {
+  if (channel === undefined) {
+    console.log("isChannelReadyRun");
+    setTimeout(isChannelReady, 50);
+  }
+  else if (channel !== undefined) {
+    console.log("Channel Ready!")
+  }
+  else {isChannelReady();}
 }
 
+isChannelReady();
+
+// channel.on("ChannelMessage", function(message, id) {
+//   let chat = document.getElementById("chat");
+//   let messagespan = document.createElement("span");
+//   messagespan.textContent = message;
+//   let newline = document.createElement("br");
+//   chat.append(messagespan);
+//   chat.append(newline);
+//   console.log(message);
+// });
+
+// this function adds a user to the streams div
 let addVideoStream = function(streamId, isMyStream){
   let container = document.getElementById("myStream");
   let streamDiv = document.createElement("div");
@@ -69,12 +81,14 @@ let addVideoStream = function(streamId, isMyStream){
   container.appendChild(streamDiv);
 };
 
+// this function stops the user's stream and removes it from the page
 let removeMyVideoStream = function(){
   globalStream.stop();
   let remDiv = document.getElementById(globalStream.getId());
   remDiv.parentNode.removeChild(remDiv);
 };
 
+// this function stops the stream and removes it's div from the page
 let removeVideoStream = function(evt){
   let stream = evt.stream;
   stream.stop();
@@ -104,6 +118,7 @@ client.join(
   }
 );
 
+// the below four functions handle the client events
 client.on("stream-added", function(evt){
   client.subscribe(evt.stream,handlefail);
 });
@@ -111,7 +126,7 @@ client.on("stream-added", function(evt){
 client.on("stream-subscribed", function(evt){
   console.log("Subscribed Stream");
   let stream = evt.stream;
-  if(stream.params.streamId === "ScreenShare") {
+  if(stream.getId() === "ScreenShare") {
     stream.play('centerScreen');
   }
   else {
@@ -126,6 +141,7 @@ client.on("peer-leave", function(evt) {
   removeVideoStream(evt);
 });
 
+// leaves the call and returns the user to the home page when leave button is pressed
 document.getElementById("leave").onclick = function(){
   client.leave(function() {
     console.log("Left the Call");
@@ -136,6 +152,7 @@ document.getElementById("leave").onclick = function(){
   window.location.href = "index.html";
 }
 
+// mutes/unmutes video when the video button is pressed
 document.getElementById("video").onclick = function() {
   if(!isVideoMuted) {
     globalStream.muteVideo();
@@ -146,6 +163,7 @@ document.getElementById("video").onclick = function() {
   isVideoMuted = !isVideoMuted;
 };
 
+// mutes/unmutes audio when the audio button is pressed
 document.getElementById("audio").onclick = function() {
   if(!isAudioMuted) {
     globalStream.muteAudio();
@@ -156,12 +174,13 @@ document.getElementById("audio").onclick = function() {
   isAudioMuted = !isAudioMuted;
 };
 
+// starts screensharing when the screenshare button is pressed
 document.getElementById("screenshare").onclick = function() {
   if(!isScreenShare) {
-    client.join(
+    screenClient.join(
     null,
     getRoom(),
-    "Screenshare",
+    "ScreenShare",
     () =>{
       var screenshare = AgoraRTC.createStream({
         streamId: "ScreenShare",
@@ -171,10 +190,9 @@ document.getElementById("screenshare").onclick = function() {
         screenAudio: true
       })
       screenshare.init(function(evt) {
-        addVideoStream("Screenshare", false);
-        screenshare.play("centerScreen");
+        addVideoStream("ScreenShare", false);
         console.log("App id: ${appId}\nChannel id: ${channelName}");
-        client.publish(screenshare);
+        screenClient.publish(screenshare);
       });
     }
   );
@@ -197,22 +215,7 @@ document.getElementById("screenshare").onclick = function() {
   isScreenShare = !isScreenShare
 }
 
-// screenClient.on("stream-added", function(evt){
-//   screenClient.subscribe(evt.stream,handlefail);
-// });
-
-// screenClient.on("stream-subscribed", function(evt){
-//   console.log("Subscribed Stream");
-//   let stream = evt.stream;
-//   if(stream.params.streamId === "ScreenShare") {
-//     stream.play('centerScreen');
-//   }
-//   else {
-//     addVideoStream(stream.getId(), false);
-//     stream.play(stream.getId());
-//   }
-// });
-
+// reveals the chat when the chatButton is pressed
 document.getElementById("chatButton").onclick = function() {
   let chatbox = document.getElementById("chat");
   let msginput = document.getElementById("messageInput");
@@ -227,6 +230,8 @@ document.getElementById("chatButton").onclick = function() {
   isChatOpen = !isChatOpen;
 }
 
+// sends a message through the chat when the send button is clicked and puts
+// the message in the user's chat
 document.getElementById("send").onclick = function() {
   let message = document.getElementById("message").value;
   message = myName + ": " + message;

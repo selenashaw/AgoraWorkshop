@@ -2,18 +2,17 @@
   <header>
     <title> Virtual Theater </title>
     <link rel="stylesheet" href="styles.css">
-    
-    <!--Favicon code To debug when github.io is setup-->
-    <link rel="icon" type="image/png" href="/assets/logo.png">
 
-    <!--Font code-->
+    <!-- Setting the Font -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     
   </header>
   <body>
     <div id="flexContainer">
-      <div id="right"></div>
+      <!-- Left and right containers are in place for the background image-->
+      <div id="left"></div>
+      <!-- The center contianer includes the logo and 'login' form for the app -->
       <div id="center">
         <div class = "logo">
           <img id="myLogo" src="assets/logo.png"/>
@@ -28,7 +27,7 @@
           <button class="submitButton" id="join" onclick="validInputs()">Join</button>  
         </form>
       </div>
-      <div id=left></div>
+      <div id="right"></div>
     </div>
     <script src="setup.js"></script>
   </body>
