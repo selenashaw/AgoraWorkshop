@@ -6,7 +6,6 @@ let isVideoMuted = false;
 let isScreenShare = false;
 let isChatOpen = false;
 let channelName = "textChat";
-let channel;
 
 let myName = getName();
 
@@ -36,34 +35,18 @@ let screenClient = AgoraRTC.createClient({
 
 screenClient.init(appId, ()=> console.log("AgoraRTC Client Connected Successfully", handlefail));
 
-rtm.login({uid:getName()}).then(() => {
-  channel = rtm.createChannel(channelName);
-  channel.join();
-  console.log("Channel created and joined.");
-}).catch(error => {handlefail});
-
-let isChannelReady = function() {
-  if (channel === undefined) {
-    console.log("isChannelReadyRun");
-    setTimeout(isChannelReady, 50);
-  }
-  else if (channel !== undefined) {
-    console.log("Channel Ready!")
-  }
-  else {isChannelReady();}
+let joinChat = function() {
+  let channel;
+  rtm.login({uid:getName()}).then(() => {
+    channel = rtm.createChannel(channelName);
+    channel.join();
+    console.log("Channel created and joined.");
+  }).catch(error => {handlefail});
+  return channel;
 }
 
-isChannelReady();
-
-// channel.on("ChannelMessage", function(message, id) {
-//   let chat = document.getElementById("chat");
-//   let messagespan = document.createElement("span");
-//   messagespan.textContent = message;
-//   let newline = document.createElement("br");
-//   chat.append(messagespan);
-//   chat.append(newline);
-//   console.log(message);
-// });
+let channel = joinChat();
+console.log(channel);
 
 // this function adds a user to the streams div
 let addVideoStream = function(streamId, isMyStream){
@@ -195,22 +178,7 @@ document.getElementById("screenshare").onclick = function() {
         screenClient.publish(screenshare);
       });
     }
-  );
-    
-    // let params = {
-    //   videoDimensions: {
-    //     // converting vh and vw to pixels
-    //     width: (document.documentElement.clientWidth * 60) / 100,
-    //     height: (document.documentElement.clientHeight * 75) / 100
-    //   },
-    //   frameRate: 15,
-    //   captureMouseCursor: true
-    // };
-
-    // screenTrack.StartScreenCaptureByScreenRect(rect, rect, params);
-  }
-  else {
-    //StopScreenCapture();
+  );  
   }
   isScreenShare = !isScreenShare
 }
@@ -247,4 +215,12 @@ document.getElementById("send").onclick = function() {
   }).catch(error => {handlefail});
 }
 
-
+channel.on("ChannelMessage", function(message, id) {
+  let chat = document.getElementById("chat");
+  let messagespan = document.createElement("span");
+  messagespan.textContent = message;
+  let newline = document.createElement("br");
+  chat.append(messagespan);
+  chat.append(newline);
+  console.log(message);
+});
